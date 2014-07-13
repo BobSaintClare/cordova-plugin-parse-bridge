@@ -18,6 +18,7 @@ under the License.
  */
 
 #import <Cordova/CDV.h>
+#import <Parse/Parse.h>
 
 @interface CDVParseBridge : CDVPlugin
 - (void)echo:(CDVInvokedUrlCommand*)command;
