@@ -69,6 +69,25 @@ Device registration needs to be done directly in your native iOS and/or Android 
         // Remainder of your code here
 		   ...
 
+When the above code is invoked for the first time on a device, iOS prompts the user to authorize Push Notifications for the given app.<br>
+Alternatively -and on iOS only at this time- you can control when this registration occurs; and therefore control when the user would be presented with the option to allow or not push notifications:<br>
+1) Declare the registerForParsePushNotifications function in your js:
+
+    window.registerForParsePushNotifications = function(callback) {
+        cordova.exec(callback, function(err) {
+           callback('Could not register for Parse Push Notifications');
+        }, "ParseBridge", "registerPushNotifications",
+           ["yoursupersecretapplicationid", "yoursupersecretclientkey"]);
+    };
+
+2) Invoke the registerForParsePushNotifications function:
+
+    window.registerForParsePushNotifications(function(returnValue) {
+      console.log(returnValue);
+    });
+
+To re-iterate, the above is for iOS ONLY at this time. You have to follow the steps below for Android.
+
 ####In Android:
 
 	public class yourCDVApp extends CordovaActivity 

@@ -22,6 +22,7 @@ under the License.
 
 @interface CDVParseBridge : CDVPlugin
 - (void)echo:(CDVInvokedUrlCommand*)command;
+- (void)registerPushNotifications:(CDVInvokedUrlCommand*)command;
 - (void)setParseChannel:(CDVInvokedUrlCommand*)command;
 - (void)sendParseNotification:(CDVInvokedUrlCommand*)command;
 @end
@@ -43,6 +44,27 @@ under the License.
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
   }];
 }
+
+- (void)registerPushNotifications:(CDVInvokedUrlCommand*)command
+{
+  CDVPluginResult* pluginResult = nil;
+  NSString* applicationId = [command.arguments objectAtIndex:0];
+  NSString* clientKey = [command.arguments objectAtIndex:1];
+
+  if (applicationId != nil && [applicationId length] > 0
+      && clientKey != nil && [clientKey length] > 0) {
+
+    [Parse setApplicationId:applicationId
+              clientKey:clientKey];
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge|
+                                                UIRemoteNotificationTypeAlert|
+                                                UIRemoteNotificationTypeSound];
+    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"Registered for Push Notifications"];
+  } else {
+    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
+  }
+}
+
 
 - (void)setParseChannel:(CDVInvokedUrlCommand*)command
 {
