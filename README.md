@@ -86,6 +86,7 @@ Alternatively -and on iOS only at this time- you can control when this registrat
       console.log(returnValue);
     });
 
+As a side-note - this is quite involved to test on a repeated basis: http://stackoverflow.com/questions/2438400/reset-push-notification-settings-for-app <br>
 To re-iterate, the above is for iOS ONLY at this time. You have to follow the steps below for Android.
 
 ####In Android:
