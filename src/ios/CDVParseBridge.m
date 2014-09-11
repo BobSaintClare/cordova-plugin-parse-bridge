@@ -63,6 +63,9 @@ under the License.
   } else {
     pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
   }
+  [self.commandDelegate runInBackground:^{
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+  }];
 }
 
 

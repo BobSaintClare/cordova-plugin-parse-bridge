@@ -39,6 +39,12 @@ public class ParseBridge extends CordovaPlugin {
         this.echo(message, callbackContext);
         return true;
       }
+      if (action.equals("registerPushNotifications")) {
+        String applicationId = args.getString(0);
+        String clientKey = args.getString(1);
+        this.registerPushNotifications(applicationId, clientKey, callbackContext);
+        return true;
+      }
       if (action.equals("setParseChannel")) {
         String channelName = args.getString(0);
         this.setParseChannel(channelName, callbackContext);
@@ -60,6 +66,14 @@ public class ParseBridge extends CordovaPlugin {
       } else {
         callbackContext.error("Expected one non-empty string argument.");
       }
+    }
+
+    private void registerPushNotifications(String applicationId, String clientKey, CallbackContext callbackContext) {
+      // All that needs to happen here is something along the lines of
+      //Parse.initialize(currentCordovaActivity, "yoursupersecretapplicationid", "yoursupersecretclientkey");
+      //PushService.setDefaultPushCallback(this, CordovaActivity.class);
+      //ParseInstallation.getCurrentInstallation().saveInBackground();
+      callbackContext.success("registerPushNotifications currently non-op on Android");
     }
 
     private void setParseChannel(String channelName, CallbackContext callbackContext) {
