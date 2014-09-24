@@ -56,9 +56,16 @@ under the License.
 
     [Parse setApplicationId:applicationId
               clientKey:clientKey];
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
+      [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
+      [[UIApplication sharedApplication] registerForRemoteNotifications];
+    } else {
+//      [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
+//       (UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert)];
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge|
                                                 UIRemoteNotificationTypeAlert|
                                                 UIRemoteNotificationTypeSound];
+    }
     pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"Registered for Push Notifications"];
   } else {
     pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
